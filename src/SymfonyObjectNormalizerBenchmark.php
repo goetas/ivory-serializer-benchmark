@@ -53,10 +53,10 @@ class SymfonyObjectNormalizerBenchmark extends AbstractBenchmark
     /**
      * {@inheritdoc}
      */
-    public function execute($horizontalComplexity = 1, $verticalComplexity = 1)
+    public function execute($data)
     {
         return $this->serializer->serialize(
-            $this->getData($horizontalComplexity, $verticalComplexity),
+            $data,
             $this->getFormat()
         );
     }

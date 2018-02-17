@@ -8,6 +8,7 @@ use Ivory\Tests\Serializer\Benchmark\JmsBenchmark;
 use Ivory\Tests\Serializer\Benchmark\Result\BenchmarkResultInterface;
 use Ivory\Tests\Serializer\Benchmark\Result\ResultsAggregate;
 use Ivory\Tests\Serializer\Benchmark\Runner\BenchmarkRunner;
+use Ivory\Tests\Serializer\Benchmark\Runner\DataGenerator;
 use Ivory\Tests\Serializer\Benchmark\SymfonyGetSetNormalizerBenchmark;
 use Ivory\Tests\Serializer\Benchmark\SymfonyObjectNormalizerBenchmark;
 use Symfony\Component\Console\Command\Command;
@@ -74,8 +75,15 @@ class BenchmarkCommand extends Command
 
         $results = new ResultsAggregate();
 
+        $dataGen = new DataGenerator();
+        $data = $dataGen->getData($horizontalComplexity, $verticalComplexity);
+
         foreach ($benchmarks as $benchmark) {
-            $results->addResult($this->runner->run($benchmark, $iteration, $horizontalComplexity, $verticalComplexity));
+            $benchmark->setUp();
+        }
+
+        foreach ($benchmarks as $benchmark) {
+            $results->addResult($this->runner->run($benchmark, $data, $iteration, $horizontalComplexity, $verticalComplexity));
             $output->writeln($benchmark->getName() . ': Done!');
         }
 

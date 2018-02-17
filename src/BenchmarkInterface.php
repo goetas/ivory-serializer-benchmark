@@ -15,8 +15,7 @@ interface BenchmarkInterface
     public function getName(): string;
 
     /**
-     * @param int $horizontalComplexity
-     * @param int $verticalComplexity
+     * @param mixed $data
      */
-    public function execute($horizontalComplexity = 1, $verticalComplexity = 1);
+    public function execute($data);
 }

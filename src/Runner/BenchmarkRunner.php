@@ -22,15 +22,14 @@ class BenchmarkRunner
      */
     public function run(
         BenchmarkInterface $benchmark,
-        $iteration = 1,
-        $horizontalComplexity = 1,
-        $verticalComplexity = 1
+        $data,
+        $iteration = 1
     ) {
         $results = [];
-        $this->doRun($benchmark);
+        $this->doRun($benchmark, $data);
 
         for ($i = 0; $i < $iteration; $i++) {
-            $results[] = $this->doRun($benchmark, $horizontalComplexity, $verticalComplexity);
+            $results[] = $this->doRun($benchmark, $data);
         }
 
         if ($iteration > 1) {
@@ -42,17 +41,13 @@ class BenchmarkRunner
 
     /**
      * @param BenchmarkInterface $benchmark
-     * @param int                $horizontalComplexity
-     * @param int                $verticalComplexity
      *
      * @return BenchmarkResult
      */
-    private function doRun(BenchmarkInterface $benchmark, $horizontalComplexity = 1, $verticalComplexity = 1)
+    private function doRun(BenchmarkInterface $benchmark, $data)
     {
-        $benchmark->setUp();
-
         $startTime = microtime(true);
-        $benchmark->execute($horizontalComplexity, $verticalComplexity);
+        $benchmark->execute($data);
         $finishTime = microtime(true);
 
         return new BenchmarkResult($benchmark->getName(), $finishTime - $startTime);

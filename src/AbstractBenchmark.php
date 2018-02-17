@@ -51,15 +51,4 @@ abstract class AbstractBenchmark implements BenchmarkInterface
     {
         return 'json';
     }
-
-    /**
-     * @param int $horizontalComplexity
-     * @param int $verticalComplexity
-     *
-     * @return Forum
-     */
-    protected function getData(int $horizontalComplexity = 1, int $verticalComplexity = 1): Forum
-    {
-        return $this->dataGenerator->getData($horizontalComplexity, $verticalComplexity);
-    }
 }
